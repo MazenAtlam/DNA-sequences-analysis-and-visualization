@@ -8,8 +8,7 @@ def generate_dot_plot(seq1, seq2):
     between two DNA sequences.
     
     The dot plot compares the sequences nucleotide by nucleotide. Matches
-    are represented as '1' (dots) in a 2D matrix, while mismatches are '0',
-    creating diagonal lines where extended homologies exist.
+    are represented as '1' (dots) in a 2D matrix, while mismatches are '0'.
     
     Args:
         seq1 (str or Bio.Seq.Seq): The first DNA sequence corresponding to the Y-axis.
@@ -25,7 +24,7 @@ def generate_dot_plot(seq1, seq2):
     # Initialize a 2D matrix with zeroes representing mismatches
     dot_matrix = np.zeros((len1, len2))
     
-    # Populate the matrix with 1s where nucleotides natively match
+    # Populate the matrix with 1s if nucleotides match
     for i in range(len1):
         for j in range(len2):
             if seq1_str[i] == seq2_str[j]:
@@ -37,32 +36,32 @@ def generate_dot_plot(seq1, seq2):
     # Find all coordinates where the matrix is 1 (matches)
     y_coords, x_coords = np.where(dot_matrix == 1)
     
-    # Plot as simple black small open circles ('o') instead of solid rectangles
+    # Plot as simple black small open circles ('o')
     plt.scatter(x_coords, y_coords, marker='o', facecolors='none', edgecolors='black', s=30)
     
-    # Configure the background grid to form distinct cells encompassing the dots
+    # Configure the background grid to form distinct cells
     ax = plt.gca()
     ax.set_xticks(np.arange(-0.5, len2, 1), minor=True)
     ax.set_yticks(np.arange(-0.5, len1, 1), minor=True)
     ax.grid(which='minor', color='gray', linestyle='-', linewidth=0.5)
     ax.tick_params(which='minor', bottom=False, left=False)
     
-    # Adjust axes limits to encompass the matrix dimensions fully
-    # Setting Y-axis descending so that y=0 is positioned at the top like standard imshow
+    # Adjust axes limits to match the matrix dimensions
+    # Setting Y-axis descending so that y=0 is positioned at the top
     plt.xlim(-0.5, len2 - 0.5)
     plt.ylim(len1 - 0.5, -0.5)
     
-    # Contextual plot aesthetics and labeling
+    # Contextual plot labeling
     plt.title('Sequence Alignment Dot Plot', fontsize=16)
     plt.xlabel('Sequence 2', fontsize=14)
     plt.ylabel('Sequence 1', fontsize=14)
     
-    # Display the nucleotides directly on the axes if the sequences are sufficiently short
+    # Display the nucleotides directly on the axes if the sequences are short
     if len1 <= 50 and len2 <= 50:
         plt.yticks(range(len1), list(seq1_str))
         plt.xticks(range(len2), list(seq2_str))
 
-        # Style the tick labels to be bigger, have a background of a brown square,
+        # Style the tick labels to be bold, have a background of a brown square,
         # and use a monospace font so that bounding boxes are uniformly sized.
         bbox_props = dict(boxstyle="square,pad=0.3", fc="brown", ec="brown")
         

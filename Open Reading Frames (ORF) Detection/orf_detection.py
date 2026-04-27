@@ -2,7 +2,7 @@ from Bio.Seq import Seq
 
 def get_orfs(sequence):
     """
-    Scans a given DNA sequence for Open Reading Frames (ORFs) across 
+    Scans a given DNA sequence for Open Reading Frames (ORFs) through 
     all three forward reading frames (offsets 0, 1, and 2).
     
     An ORF is defined as a sequence of codons that begins with the start codon 'ATG' 
@@ -20,7 +20,7 @@ def get_orfs(sequence):
             - 'frame' (int): The forward reading frame (0, 1, or 2).
     """
     
-    # Convert sequence to an upper-case string to handle Seq objects and standard strings automatically
+    # Convert sequence to an upper-case string
     seq_str = str(sequence).upper()
     
     start_codon = "ATG"
@@ -33,17 +33,17 @@ def get_orfs(sequence):
         while i <= len(seq_str) - 3:
             codon = seq_str[i:i+3]
             
-            # If we find a start codon
+            # Found a start codon
             if codon == start_codon:
                 stop_found = False
                 j = i + 3
                 
-                # Scan downstream in increments of 3 for the first in-frame stop codon
+                # Scan the following codons in increments of 3 for the first stop codon
                 while j <= len(seq_str) - 3:
                     stop_candidate = seq_str[j:j+3]
                     
                     if stop_candidate in stop_codons:
-                        # Found a complete, valid ORF. Extract it.
+                        # Found a complete, valid ORF
                         orf_seq = seq_str[i:j+3]
                         orfs.append({
                             "sequence": orf_seq,
@@ -54,18 +54,17 @@ def get_orfs(sequence):
                         })
                         
                         # Update the search index `i` to `j + 3`
-                        # This ensures the loop continues searching the remainder of that specific reading frame
-                        # for new, non-overlapping start codons, moving exactly past the stop codon.
+                        # to search the remainder of that specific reading frame
                         i = j + 3
                         stop_found = True
                         break
                     
                     j += 3
                 
-                # If we scanned the rest of the sequence without finding a stop codon,
-                # we just advance the start index by one codon.
+                # If the rest of the sequence has no stop codon,
+                # break to advance to the next frame.
                 if not stop_found:
-                    i += 3
+                    break
             else:
                 # Advance if the current codon was not a start codon
                 i += 3
@@ -77,10 +76,10 @@ def get_orfs(sequence):
 # =============================================================================
 #
 # if __name__ == "__main__":
-#     # Small test DNA sequence containing multiple ORFs spanning different frames
+#     # Small test DNA sequence containing multiple ORFs of different frames
 #     # Frame 0: ATG...TAA 
-#     # Frame 1: ...ATG...TAG
-#     # Frame 2: ...ATG...TGA
+#     # Frame 1: .ATG...TAG
+#     # Frame 2: ..ATG...TGA
 #     test_sequence = Seq("ATGCGTAAATGATAGTATAAAATGCCCTGA")
 #
 #     print(f"Testing DNA Sequence: {test_sequence}")

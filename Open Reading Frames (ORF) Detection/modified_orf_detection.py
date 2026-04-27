@@ -4,10 +4,10 @@ from Bio.Seq import Seq
 def get_orfs_with_min_length(sequence, min_length=100):
     """
     Scans a given DNA sequence for complete ORFs and filters them 
-    based on a strictly minimum length threshold.
+    based on a minimum length threshold.
     
     This function wraps the base `get_orfs` logic and removes any 
-    ORFs whose nucleotide length falls strictly below the `min_length`.
+    ORFs whose nucleotide length is less than the `min_length`.
 
     Args:
         sequence (str or Bio.Seq.Seq): The DNA sequence to be analyzed.
@@ -18,10 +18,10 @@ def get_orfs_with_min_length(sequence, min_length=100):
         list[dict]: A list of dictionaries containing the filtered ORF details.
     """
     
-    # Fetch all mathematically valid ORFs across the 3 forward frames
+    # Fetch all valid ORFs across the 3 forward frames
     all_orfs = get_orfs(sequence)
     
-    # Filter out any ORF that is strictly shorter than min_length
+    # Filter out any ORF that its length is less than min_length
     filtered_orfs = [orf for orf in all_orfs if orf["length"] >= min_length]
     
     return filtered_orfs
@@ -34,14 +34,14 @@ def get_orfs_with_min_length(sequence, min_length=100):
 #     # Same sequence from orf_detection.py
 #     # Expected ORFs:
 #     # 1. ATGCGTAAATGA (length: 12)
-#     # 2. ATGATAGTATAA (length: 12)
-#     # 3. ATGCCCTGA    (length: 9)
+#     # 2. ATGCCCTGA    (length: 9)
+#     # 3. ATGATAGTATAA (length: 12)
 #     test_sequence = Seq("ATGCGTAAATGATAGTATAAAATGCCCTGA")
 #
 #     print(f"Testing DNA Sequence: {test_sequence}")
 #     print("=" * 40)
 #
-#     # We will set min_length to 10 to filter out the 3rd ORF exclusively
+#     # Test with min_length = 10 to filter out the 3rd ORF exclusively
 #     threshold = 10
 #     filtered_results = get_orfs_with_min_length(test_sequence, min_length=threshold)
 #
