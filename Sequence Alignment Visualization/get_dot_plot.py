@@ -54,6 +54,24 @@ def generate_dot_plot(seq1, seq2):
     if len1 <= 50 and len2 <= 50:
         plt.yticks(range(len1), list(seq1_str))
         plt.xticks(range(len2), list(seq2_str))
+
+        # Style the tick labels to be bigger, have a background of a brown square,
+        # and use a monospace font so that bounding boxes are uniformly sized.
+        bbox_props = dict(boxstyle="square,pad=0.3", fc="brown", ec="brown")
+        
+        for label in plt.gca().get_yticklabels():
+            label.set_fontsize(14)
+            label.set_family("monospace")
+            label.set_weight("bold")
+            label.set_color("white")
+            label.set_bbox(bbox_props)
+            
+        for label in plt.gca().get_xticklabels():
+            label.set_fontsize(14)
+            label.set_family("monospace")
+            label.set_weight("bold")
+            label.set_color("white")
+            label.set_bbox(bbox_props)
             
     plt.tight_layout()
     plt.show()
