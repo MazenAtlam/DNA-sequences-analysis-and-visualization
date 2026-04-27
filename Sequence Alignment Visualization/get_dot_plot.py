@@ -40,6 +40,13 @@ def generate_dot_plot(seq1, seq2):
     # Plot as simple black small open circles ('o') instead of solid rectangles
     plt.scatter(x_coords, y_coords, marker='o', facecolors='none', edgecolors='black', s=30)
     
+    # Configure the background grid to form distinct cells encompassing the dots
+    ax = plt.gca()
+    ax.set_xticks(np.arange(-0.5, len2, 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, len1, 1), minor=True)
+    ax.grid(which='minor', color='gray', linestyle='-', linewidth=0.5)
+    ax.tick_params(which='minor', bottom=False, left=False)
+    
     # Adjust axes limits to encompass the matrix dimensions fully
     # Setting Y-axis descending so that y=0 is positioned at the top like standard imshow
     plt.xlim(-0.5, len2 - 0.5)
