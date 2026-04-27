@@ -75,21 +75,22 @@ def get_orfs(sequence):
 # =============================================================================
 # Stress Testing & Execution Demonstration
 # =============================================================================
-if __name__ == "__main__":
-    # Small test DNA sequence containing multiple ORFs spanning different frames
-    # Frame 0: ATG...TAA 
-    # Frame 1: ...ATG...TAG
-    # Frame 2: ...ATG...TGA
-    test_sequence = Seq("ATGCGTAAATGATAGTATAAAATGCCCTGA")
-    
-    print(f"Testing DNA Sequence: {test_sequence}")
-    print("=" * 40)
-    
-    found_orfs = get_orfs(test_sequence)
-    print(f"Total ORFs found: {len(found_orfs)}\n")
-    
-    for count, orf in enumerate(found_orfs, start=1):
-        print(f"ORF #{count}:")
-        for key, val in orf.items():
-            print(f"  {key}: {val}")
-        print("-" * 25)
+#
+# if __name__ == "__main__":
+#     # Small test DNA sequence containing multiple ORFs spanning different frames
+#     # Frame 0: ATG...TAA 
+#     # Frame 1: ...ATG...TAG
+#     # Frame 2: ...ATG...TGA
+#     test_sequence = Seq("ATGCGTAAATGATAGTATAAAATGCCCTGA")
+#
+#     print(f"Testing DNA Sequence: {test_sequence}")
+#     print("=" * 40)
+#
+#     found_orfs = get_orfs(test_sequence)
+#     print(f"Total ORFs found: {len(found_orfs)}\n")
+#
+#     for count, orf in enumerate(found_orfs, start=1):
+#         print(f"ORF #{count}:")
+#         for key, val in orf.items():
+#             print(f"  {key}: {val}")
+#         print("-" * 25)
